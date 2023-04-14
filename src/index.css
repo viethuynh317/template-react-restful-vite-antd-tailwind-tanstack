@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		/* Color */
+		--primary-color: #ffca28;
+		--secondary-color: #212121;
+		--white-color: #fff;
+		--gray-color: #646464;
+		--blue-color: #18a0fb;
+		--red-color: #eb484c;
+		--green-color: #52ac52;
+		--neutral-color: #d9d9d9;
+	}
+}
+
+:root {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%;
+}

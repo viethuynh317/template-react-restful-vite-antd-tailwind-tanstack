@@ -1,0 +1,92 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"airbnb/hooks",
+		"airbnb-typescript",
+		"plugin:react/recommended",
+		"plugin:react/jsx-runtime",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/recommended-requiring-type-checking",
+		"plugin:prettier/recommended",
+		"plugin:import/recommended"
+	],
+	// Specifying Parser
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"tsconfigRootDir": ".",
+		"project": ["./tsconfig.json"]
+	},
+	// Configuring third-party plugins
+	"plugins": ["react", "@typescript-eslint", "simple-import-sort", "import"],
+	// Resolve imports
+	"settings": {
+		"import/resolver": {
+			"typescript": {
+				"project": "./tsconfig.json"
+			}
+		},
+		"react": {
+			"version": "18.x"
+		}
+	},
+	"rules": {
+		"linebreak-style": "off",
+		// Disallow the `any` type.
+		"@typescript-eslint/no-explicit-any": "warn",
+		"@typescript-eslint/ban-types": [
+			"error",
+			{
+				"extendDefaults": true,
+				"types": {
+					"{}": false
+				}
+			}
+		],
+		"react-hooks/exhaustive-deps": "off",
+		// Enforce the use of the shorthand syntax.
+		"object-shorthand": "error",
+		"no-console": "warn",
+		// Import sort
+		"simple-import-sort/imports": "error",
+		"simple-import-sort/exports": "error",
+		"import/first": "error",
+		"import/newline-after-import": "error",
+		"import/no-duplicates": "error"
+	},
+	"overrides": [
+		// override "simple-import-sort" config
+		{
+			"files": ["*.ts", "*.tsx"],
+			"rules": {
+				"simple-import-sort/imports": [
+					"error",
+					{
+						"groups": [
+							// Packages `react` related packages come first.
+							["^react", "^@?\\w"],
+							// Internal packages.
+							["^(@|components)(/.*|$)"],
+							// Side effect imports.
+							["^\\u0000"],
+							// Parent imports. Put `..` last.
+							["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+							// Other relative imports. Put same-folder imports and `.` last.
+							["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+							// Style imports.
+							["^.+\\.?(css)$"]
+						]
+					}
+				]
+			}
+		}
+	]
+}
