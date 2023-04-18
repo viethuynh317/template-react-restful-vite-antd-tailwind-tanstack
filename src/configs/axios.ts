@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.API_ENDPOINT as string; // https://swapi.dev/api/
+const baseURL = import.meta.env.VITE_API_ENDPOINT as string; // https://swapi.dev/api/
 
 export const axiosInstance = axios.create({
 	baseURL,

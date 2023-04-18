@@ -8,14 +8,15 @@ export interface IStore {
 		firstName?: string;
 		lastName?: string;
 	};
+	isAuthenticated: boolean;
 }
 
 export interface IAction<T> {
-	type: string;
+	type: 'authentication';
 	payload: T;
 }
 
 export interface IStoreContext {
 	state?: IStore;
-	dispatch?: Dispatch<IAction<any>>;
+	dispatch: Dispatch<IAction<any>>;
 }

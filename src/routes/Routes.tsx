@@ -1,11 +1,12 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 
 import useAuth from '../shared/hooks/useAuth';
 
-import PrivateRoutes from './PrivateRoutes';
-import PublicRoutes from './PublicRoutes';
+import { privateRouter, publicRouter } from './utils';
 
 export default function Routes() {
-	const auth = useAuth();
-	return <Router>{!auth ? <PrivateRoutes /> : <PublicRoutes />}</Router>;
+	const { isAuthenticated } = useAuth();
+	const router = isAuthenticated ? privateRouter : publicRouter;
+
+	return <RouterProvider router={router} />;
 }
