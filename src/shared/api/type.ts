@@ -1,18 +1,10 @@
-/**
- * Interfaces
- */
-export interface IDynamicAPI {
-	method: HTTPMethod;
-	url: string;
-	obj?: object;
-}
-
-/**
- * Enums
- */
-export enum HTTPMethod {
-	Get = 'get',
-	Post = 'post',
-	Put = 'put',
-	Delete = 'delete',
-}
+// Re-export types from main types file for backward compatibility
+export {
+	type ApiError,
+	type ApiRequestConfig,
+	type ApiResponse,
+	HttpMethod as HTTPMethod,
+	type DynamicApiRequest as IDynamicAPI,
+	type PaginatedResponse,
+	type PaginationParams,
+} from '../types/api.type';
