@@ -1,27 +1,65 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { createContext, useContext } from 'react';
 
-import { IAction, IStore, IStoreContext } from '../types';
+import { ACTION_TYPES, STORAGE_KEYS } from '../constants';
+import { StoreAction, StoreContextType, StoreState, User } from '../types';
+import { getItemFromLocalStorage } from '../utils';
 
-export const initialState: IStore = {
-	user: {},
-	isAuthenticated: false,
+// Initialize state from localStorage
+const initializeState = (): StoreState => {
+	const token = getItemFromLocalStorage<string>(STORAGE_KEYS.TOKEN);
+	const user = getItemFromLocalStorage<User>(STORAGE_KEYS.USER);
+
+	return {
+		user: user || {},
+		isAuthenticated: !!token,
+		isLoading: false,
+		error: null,
+	};
 };
 
-export const reducer = (state: IStore, action: IAction<any>): IStore => {
-	switch (action?.type) {
-		case 'authentication':
-			return { ...state, isAuthenticated: action?.payload };
+export const initialState: StoreState = initializeState();
+
+export const reducer = (state: StoreState, action: StoreAction): StoreState => {
+	switch (action.type) {
+		case ACTION_TYPES.SET_AUTHENTICATION:
+			return {
+				...state,
+				isAuthenticated: action.payload,
+				isLoading: false,
+				error: null,
+			};
+
+		case ACTION_TYPES.SET_USER:
+			return {
+				...state,
+				user: action.payload,
+				isLoading: false,
+				error: null,
+			};
+
+		case ACTION_TYPES.CLEAR_USER_DATA:
+			return {
+				...state,
+				user: {},
+				isAuthenticated: false,
+				isLoading: false,
+				error: null,
+			};
+
 		default:
 			return state;
 	}
 };
 
-export const StoreContext = createContext<IStoreContext>({
+export const StoreContext = createContext<StoreContextType>({
 	state: initialState,
 	dispatch: () => {},
 });
 
 export default function useStore() {
-	return useContext(StoreContext);
+	const context = useContext(StoreContext);
+	if (!context) {
+		throw new Error('useStore must be used within a StoreContext.Provider');
+	}
+	return context;
 }
